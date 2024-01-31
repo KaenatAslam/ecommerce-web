@@ -1,24 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import ListingsPage from "./components/ListingsPage";
+import Header from "./components/Header";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ProductDetailsPage from "./components/ProductDetailsPage";
+import { products, categories } from "./data";
+import AddProductForm from "./components/AddProductForm";
+import CartPage from "./components/CartPage";
+import ContextProvider from "./context/ContextProvider";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ContextProvider>
+      <Router>
+        <Header categories={categories} />
+        <Routes>
+          <Route path="/" element={<ListingsPage />} />
+          {categories.map((category) => (
+            <Route
+              key={category.id}
+              path={`/category/${category.name
+                .toLowerCase()
+                .replace(/\s+/g, "-")}`}
+              element={<ListingsPage category={category?.name} />}
+            />
+          ))}
+          <Route path="/add-product" element={<AddProductForm />} />
+          <Route path="/product/:id" element={<ProductDetailsPage />} />
+          <Route path="/cart" element={<CartPage />} />
+        </Routes>
+      </Router>
+    </ContextProvider>
   );
 }
 
