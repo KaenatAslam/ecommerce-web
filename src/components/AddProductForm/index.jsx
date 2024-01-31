@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import React, { memo, useContext, useRef, useState } from "react";
+import AddIcon from "@mui/icons-material/Add";
 import {
   Box,
   TextField,
@@ -40,7 +41,6 @@ function AddProductForm({ onClose, products }) {
   };
 
   const handleSubmit = (values) => {
-    console.log("Form submitted with data:", values);
     const newProduct = {
       id: Date.now(),
       name: values.name,
@@ -64,7 +64,7 @@ function AddProductForm({ onClose, products }) {
   };
 
   return (
-    <Dialog open={true} onClose={onClose}>
+    <Dialog open={true} onClose={onClose} fullWidth>
       <DialogTitle>Add Product</DialogTitle>
       <DialogContent>
         <Formik
@@ -85,18 +85,33 @@ function AddProductForm({ onClose, products }) {
                 <Button
                   variant="outlined"
                   onClick={() => fileInputRef.current.click()}
+                  startIcon={<AddIcon />}
                 >
                   Upload Image
                 </Button>
-                {imageUrl && (
-                  <Box mt={2}>
+                <Box
+                  mt={2}
+                  sx={{
+                    width: 250,
+                    height: 250,
+                    backgroundColor: "#eee",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  {imageUrl ? (
                     <img
                       src={imageUrl}
                       alt="product"
-                      style={{ maxWidth: "100%", maxHeight: "200px" }}
+                      style={{ maxWidth: "100%", maxHeight: "100%" }}
                     />
-                  </Box>
-                )}
+                  ) : (
+                    <Typography variant="body2" fontSize="18px">
+                      +
+                    </Typography>
+                  )}
+                </Box>
                 {errors.image && touched.image && (
                   <Typography color="error">{errors.image}</Typography>
                 )}
@@ -160,10 +175,28 @@ function AddProductForm({ onClose, products }) {
                 />
               </Box>
               <DialogActions>
-                <Button onClick={onClose} color="primary">
+                <Button
+                  onClick={onClose}
+                  sx={{
+                    color: "#000",
+                    p: 1,
+                  }}
+                >
                   Cancel
                 </Button>
-                <Button type="submit" variant="contained" color="primary">
+                <Button
+                  type="submit"
+                  variant="contained"
+                  sx={{
+                    p: 1,
+                    backgroundColor: "#000",
+                    color: "#fff",
+                    borderRadius: "10px",
+                    "&:hover": {
+                      backgroundColor: "#535659",
+                    },
+                  }}
+                >
                   Add Product
                 </Button>
               </DialogActions>

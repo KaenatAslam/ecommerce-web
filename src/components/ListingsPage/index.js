@@ -10,9 +10,7 @@ import { useNavigate } from "react-router-dom";
 function ListingsPage({ category }) {
   const navigate = useNavigate();
 
-  const { addProduct, cartProducts, addProductToCart, products } =
-    useContext(Context);
-  console.log({ addProduct, cartProducts, addProductToCart });
+  const { products, filteredProducts } = useContext(Context);
   const [isFormOpen, setIsFormOpen] = useState(false);
 
   const openForm = () => {
@@ -25,7 +23,7 @@ function ListingsPage({ category }) {
   const handleAllProductsClick = () => {
     navigate("/");
   };
-  const filteredProducts = category
+  const filteredCategoryProducts = category
     ? products.filter((product) => product?.category === category)
     : products;
 
@@ -33,7 +31,7 @@ function ListingsPage({ category }) {
     <Box className="listings-page" display="flex" flexDirection="column">
       <Box
         display="flex"
-        justifyContent="flex-start"
+        justifyContent="space-between"
         alignItems="center"
         px={4}
         my={1}
@@ -67,19 +65,33 @@ function ListingsPage({ category }) {
         </Button>
       </Box>
 
-      <Box
-        p={2}
-        className="product-list"
-        display="flex"
-        flexDirection="row"
-        flexWrap="wrap"
-        gap={2}
-      >
-        {filteredProducts.map((product) => (
-          <ProductCard product={product} />
-        ))}
-      </Box>
-
+      {filteredProducts ? (
+        <Box
+          p={2}
+          className="product-list"
+          display="flex"
+          flexDirection="row"
+          flexWrap="wrap"
+          gap={2}
+        >
+          {filteredProducts.map((product) => (
+            <ProductCard product={product} />
+          ))}
+        </Box>
+      ) : (
+        <Box
+          p={2}
+          className="product-list"
+          display="flex"
+          flexDirection="row"
+          flexWrap="wrap"
+          gap={2}
+        >
+          {filteredCategoryProducts.map((product) => (
+            <ProductCard product={product} />
+          ))}
+        </Box>
+      )}
       <Dialog open={isFormOpen} onClose={closeForm}>
         <AddProductForm onClose={closeForm} products={products} />
       </Dialog>

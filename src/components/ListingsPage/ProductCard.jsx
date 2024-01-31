@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   Box,
   Button,
@@ -16,12 +16,13 @@ import { useNavigate } from "react-router-dom";
 
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
-
   const { id, name, category, description, price, image } = product;
-  const { addProductToCart } = useContext(Context);
+  const { addProductToCart, cartProducts } = useContext(Context);
+  const [isInCart, setIsInCart] = useState(
+    cartProducts.some((item) => item.id === id)
+  );
   const renderImage = () => {
     if (typeof image === "string") {
-      // If image is a URL
       return (
         <CardMedia
           component="img"
@@ -32,7 +33,6 @@ const ProductCard = ({ product }) => {
         />
       );
     } else if (image instanceof Blob) {
-      // If image is a Blob (e.g., uploaded file)
       return (
         <CardMedia
           component="img"
@@ -43,7 +43,6 @@ const ProductCard = ({ product }) => {
         />
       );
     } else {
-      // Default fallback image
       return (
         <Box
           display="flex"
@@ -58,9 +57,9 @@ const ProductCard = ({ product }) => {
   };
 
   const handleAddToCart = () => {
-    addProductToCart(product, 1); // Add the product to the cart with quantity 1
+    addProductToCart(product, 1);
+    setIsInCart(true);
     toast.success(`${name} added to the cart!`);
-    console.log(`Product ${name} added to the cart!`);
   };
 
   const handleProductCardClick = () => {
@@ -105,6 +104,7 @@ const ProductCard = ({ product }) => {
         <Button
           fullWidth
           onClick={handleAddToCart}
+          disabled={isInCart}
           sx={{
             padding: 1,
             color: "#fff",
@@ -114,10 +114,15 @@ const ProductCard = ({ product }) => {
               color: "#fff",
               scale: 1.5,
             },
+            "&:disabled": {
+              backgroundColor: "#535659",
+              color: "#fff",
+              scale: 1.5,
+            },
           }}
           endIcon={<ShoppingCart fill />}
         >
-          Add to Cart
+          {isInCart ? "In Cart" : "Add to Cart"}
         </Button>
       </Box>
     </Card>

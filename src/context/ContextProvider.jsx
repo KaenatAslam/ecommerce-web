@@ -5,6 +5,7 @@ export const Context = createContext(null);
 function ContextProvider({ children }) {
   const [products, setProducts] = useState([]);
   const [cartProducts, setCartProducts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const addProduct = (product) => {
     setProducts((products) => [...products, product]);
@@ -47,6 +48,10 @@ function ContextProvider({ children }) {
     );
   };
 
+  const filteredProducts = products.filter((product) =>
+    product.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <Context.Provider
       value={{
@@ -60,6 +65,9 @@ function ContextProvider({ children }) {
         removeProductFromCart,
         increaseProductQuantity,
         decreaseProductQuantity,
+        filteredProducts,
+        searchTerm,
+        setSearchTerm,
       }}
     >
       {children}

@@ -118,9 +118,11 @@ const CartProduct = ({ product, index }) => {
           >
             -
           </Button>
-          <IconButton onClick={handleRemoveProduct}>
-            <DeleteIcon />
-          </IconButton>
+          <Grid item xs={6} md={3}>
+            <IconButton onClick={handleRemoveProduct}>
+              <DeleteIcon />
+            </IconButton>
+          </Grid>
         </Grid>
       </Grid>
     </Box>
@@ -225,7 +227,7 @@ const CartPage = () => {
                 Total:
               </Typography>
               <Typography variant="h6" fontWeight={600}>
-                ${calculateTotal()}
+                PKR{calculateTotal()}
               </Typography>
             </Box>
             <Button

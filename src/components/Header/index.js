@@ -58,7 +58,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const Header = ({ categories }) => {
   const navigate = useNavigate();
-  const { cartProducts } = useContext(Context);
+
+  const { cartProducts, setSearchTerm, searchTerm } = useContext(Context);
 
   const handleCategoryClick = (category) => {
     navigate(`/category/${category}`);
@@ -119,6 +120,8 @@ const Header = ({ categories }) => {
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
           </Search>
         </Box>

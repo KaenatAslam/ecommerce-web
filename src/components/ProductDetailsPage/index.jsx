@@ -1,14 +1,7 @@
 import React, { memo, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Context } from "../../context/ContextProvider";
-import {
-  Grid,
-  Card,
-  CardContent,
-  Typography,
-  Box,
-  Button,
-} from "@mui/material";
+import { Grid, Card, Typography, Box, Button } from "@mui/material";
 
 function ProductDetailsPage() {
   const { products } = useContext(Context);
@@ -37,7 +30,7 @@ function ProductDetailsPage() {
   const { name, category, description, price } = product;
 
   return (
-    <Grid container spacing={2} p={2}>
+    <Grid container spacing={2} p={4}>
       <Grid
         item
         container
@@ -64,7 +57,16 @@ function ProductDetailsPage() {
           />
         </Card>
       </Grid>
-      <Grid item xs={12} md={6} height="500px">
+      <Grid
+        item
+        container
+        alignItems="start"
+        justifyContent="center"
+        flexDirection="column"
+        xs={12}
+        md={6}
+        height="500px"
+      >
         <Typography
           variant="h5"
           component="h2"
@@ -94,6 +96,9 @@ function ProductDetailsPage() {
             variant="body1"
             component="p"
             gutterBottom
+            whiteSpace="nowrap"
+            overflow="hidden"
+            textOverflow="ellipsis"
             fontWeight={600}
           >
             {description ?? "N/A"}
