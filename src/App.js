@@ -4,7 +4,7 @@ import ListingsPage from "./components/ListingsPage";
 import Header from "./components/Header";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ProductDetailsPage from "./components/ProductDetailsPage";
-import { products, categories } from "./data";
+import { categories } from "./data";
 import AddProductForm from "./components/AddProductForm";
 import CartPage from "./components/CartPage";
 import ContextProvider from "./context/ContextProvider";

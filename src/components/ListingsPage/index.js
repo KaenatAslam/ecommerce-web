@@ -13,14 +13,12 @@ function ListingsPage({ category }) {
   const { addProduct, cartProducts, addProductToCart, products } =
     useContext(Context);
   console.log({ addProduct, cartProducts, addProductToCart });
-  const [isFormOpen, setIsFormOpen] = useState(false); // State to control visibility of AddProductForm
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
-  // Function to open the AddProductForm dialog
   const openForm = () => {
     setIsFormOpen(true);
   };
 
-  // Function to close the AddProductForm dialog
   const closeForm = () => {
     setIsFormOpen(false);
   };
@@ -40,6 +38,18 @@ function ListingsPage({ category }) {
         px={4}
         my={1}
       >
+        <Typography variant="h3" textAlign="center" p={2}>
+          {category ? (
+            category
+          ) : (
+            <Link
+              onClick={handleAllProductsClick}
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              Products
+            </Link>
+          )}
+        </Typography>
         <Button
           variant="contained"
           onClick={openForm}
@@ -56,18 +66,7 @@ function ListingsPage({ category }) {
           Add New
         </Button>
       </Box>
-      <Typography variant="h3" textAlign="center" p={2}>
-        {category ? (
-          category
-        ) : (
-          <Link
-            onClick={handleAllProductsClick}
-            style={{ textDecoration: "none", color: "inherit" }}
-          >
-            Products
-          </Link>
-        )}
-      </Typography>
+
       <Box
         p={2}
         className="product-list"
@@ -80,7 +79,7 @@ function ListingsPage({ category }) {
           <ProductCard product={product} />
         ))}
       </Box>
-      {/* Render AddProductForm inside Dialog component */}
+
       <Dialog open={isFormOpen} onClose={closeForm}>
         <AddProductForm onClose={closeForm} products={products} />
       </Dialog>

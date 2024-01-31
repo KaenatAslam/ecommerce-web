@@ -74,11 +74,10 @@ const Header = ({ categories }) => {
   return (
     <AppBar position="static" sx={containerStyles}>
       <Toolbar>
-        {/* Logo */}
         <Typography variant="h4" sx={{ flexGrow: 1, fontWeight: 600 }}>
           E-commerce
         </Typography>
-        {/* Link to show all products */}
+
         <Typography variant="subtitle1" sx={{ marginRight: "20px" }}>
           <Link
             onClick={handleAllProductsClick}
@@ -93,7 +92,6 @@ const Header = ({ categories }) => {
           </Link>
         </Typography>
 
-        {/* Categories */}
         {categories.map((category) => (
           <Typography
             key={category.id}
@@ -113,7 +111,6 @@ const Header = ({ categories }) => {
           </Typography>
         ))}
 
-        {/* Search Bar */}
         <Box sx={{ flexGrow: 1, marginRight: "20px" }}>
           <Search>
             <SearchIconWrapper>
@@ -126,7 +123,6 @@ const Header = ({ categories }) => {
           </Search>
         </Box>
 
-        {/* Cart Button */}
         <IconButton color="inherit" onClick={handleCartClick}>
           <Badge badgeContent={cartProducts?.length ?? 0} color="secondary">
             <ShoppingCart />

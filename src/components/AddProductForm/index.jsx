@@ -21,7 +21,6 @@ function AddProductForm({ onClose, products }) {
   const [imageUrl, setImageUrl] = useState(null);
 
   const validationSchema = Yup.object().shape({
-    // Update validation schema to make image field optional
     name: Yup.string().required("Product Name is required"),
     category: Yup.string().required("Product Category is required"),
     details: Yup.string().required("Product Details are required"),
@@ -32,7 +31,7 @@ function AddProductForm({ onClose, products }) {
   });
 
   const initialValues = {
-    image: null, // Initial value of image is null
+    image: null,
     name: "",
     category: "",
     details: "",
@@ -42,9 +41,8 @@ function AddProductForm({ onClose, products }) {
 
   const handleSubmit = (values) => {
     console.log("Form submitted with data:", values);
-    // Creating a new product object
     const newProduct = {
-      id: Date.now(), // Using timestamp as a unique id for the new product
+      id: Date.now(),
       name: values.name,
       category: values.category,
       description: values.details,
@@ -52,7 +50,6 @@ function AddProductForm({ onClose, products }) {
       image: values.image,
     };
 
-    // Using the addProduct function from the context to add the new product
     addProduct(newProduct);
 
     onClose();
@@ -62,8 +59,8 @@ function AddProductForm({ onClose, products }) {
 
   const handleFileChange = (event, setFieldValue) => {
     const file = event.currentTarget.files[0];
-    setFieldValue("image", file); // Set the image field value to the selected file
-    setImageUrl(URL.createObjectURL(file)); // Create a URL for the selected file
+    setFieldValue("image", file);
+    setImageUrl(URL.createObjectURL(file));
   };
 
   return (

@@ -1,16 +1,31 @@
-import React, { memo, useContext, useState } from "react";
 import { Box, Typography, Button, Grid, IconButton } from "@mui/material";
 import { Context } from "../../context/ContextProvider";
 import DeleteIcon from "@mui/icons-material/Delete";
+import React, { memo, useContext, useEffect, useState } from "react";
+
 const CartProduct = ({ product, index }) => {
+  const [imageUrl, setImageUrl] = useState("");
   const { id, name, price, image, quantity } = product;
   const [productQuantity, setProductQuantity] = useState(quantity ?? 1);
-
   const {
     increaseProductQuantity,
     decreaseProductQuantity,
     removeProductFromCart,
   } = useContext(Context);
+
+  useEffect(() => {
+    if (product) {
+      if (product.image instanceof File) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          setImageUrl(reader.result);
+        };
+        reader.readAsDataURL(product.image);
+      } else {
+        setImageUrl(product.image);
+      }
+    }
+  }, [product]);
 
   const handleIncreaseQuantity = () => {
     increaseProductQuantity(product, 1);
@@ -42,8 +57,10 @@ const CartProduct = ({ product, index }) => {
       >
         <Grid item xs={6} md={3}>
           <img
-            src={image}
+            src={imageUrl}
             style={{
+              height: "100px",
+              width: "100px",
               borderRadius: "10px",
               marginTop: 6,
               objectFit: "contain",
@@ -128,7 +145,6 @@ const CartPage = () => {
   return (
     <Box className="cart-page" display="flex" backgroundColor="#fffcfa" p={5}>
       <Grid container spacing={2} minHeight="500px">
-        {/* First Column: Cart Products */}
         <Grid item xs={12} md={8} pr={2}>
           <Typography variant="h4" textAlign="start" py={2} fontWeight={600}>
             Your Cart
@@ -170,7 +186,6 @@ const CartPage = () => {
             ))}
         </Grid>
 
-        {/* Second Column: Checkout Details */}
         <Grid
           item
           container
@@ -225,7 +240,6 @@ const CartPage = () => {
                 },
               }}
               fullWidth
-              // onClick={handleCheckout}
             >
               Checkout
             </Button>
