@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 function ListingsPage({ category }) {
   const navigate = useNavigate();
 
-  const { products, filteredProducts } = useContext(Context);
+  const { products, filteredProducts, searchTerm } = useContext(Context);
   const [isFormOpen, setIsFormOpen] = useState(false);
 
   const openForm = () => {
@@ -65,7 +65,7 @@ function ListingsPage({ category }) {
         </Button>
       </Box>
 
-      {filteredProducts ? (
+      {filteredProducts && searchTerm ? (
         <Box
           p={2}
           className="product-list"
